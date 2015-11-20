@@ -1,0 +1,20 @@
+#!/bin/bash
+
+device="${BLOCK_INSTANCE:-intel_backlight}"
+
+maxBrightness=$(cat /sys/class/backlight/${device}/max_brightness)
+curBrightness=$(cat /sys/class/backlight/${device}/brightness)
+
+if [[ "${curBrightness}" -le 0 ]]; then
+  exit
+fi
+
+percent=$(echo "scale=0;${curBrightness} / ${maxBrightness} * 100" | bc -l)
+
+if [[ "${percent}" -le 0 ]]; then
+  exit
+fi
+
+echo "${percent}%"
+echo "${percent}%"
+echo ""

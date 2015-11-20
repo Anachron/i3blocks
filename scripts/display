@@ -1,0 +1,68 @@
+#!/bin/bash
+
+xrandrOut=$(xrandr)
+
+hdmiName=$(echo "${xrandrOut}" | grep -i 'HDMI' | awk '{print $1}')
+vgaName=$(echo "${xrandrOut}" | grep -i 'VGA' | awk '{print $1}')
+edpName=$(echo "${xrandrOut}" | grep -i 'EDP' | awk '{print $1}')
+
+activeDisplays=$(echo "${xrandrOut}" | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/" | tr -s '\n' ' ')
+displayFile='/tmp/.displays'
+
+if [[ -f "${displayFile}" ]]; then
+    oldDisplays=$(cat "${displayFile}")
+else
+    oldDisplays=""
+fi
+
+if [[ "${oldDisplays}" != "${activeDisplays}" ]]; then
+    change="yes"
+else
+    change="no"
+fi
+
+# External, HDMI + VGA
+if [[ "$activeDisplays" =~ "${hdmiName}" && "$activeDisplays" =~ "${vgaName}" ]]; then
+  if [[ "${change}" = "yes" ]]; then
+    $(xrandr --output "${edpName}" --off)
+    $(xrandr --output "${vgaName}" --auto)
+    $(xrandr --output "${hdmiName}" --primary --auto)
+  fi
+  echo "VGA1 & HDMI"
+  echo "VGA1 & HDMI"
+  echo ""
+# External, HDMI
+elif [[ "$activeDisplays" =~ "${hdmiName}" ]]; then
+  if [[ "${change}" = "yes" ]]; then
+    $(xrandr --output "${edpName}" --off)
+    $(xrandr --output "${vgaName}" --off)
+    $(xrandr --output "${hdmiName}" --primary --auto)
+  fi
+  echo "HDMI"
+  echo "HDMI"
+  echo ""
+# External, VGA
+elif [[ "$activeDisplays" =~ "${vgaName}" ]]; then
+  if [[ "${change}" = "yes" ]]; then
+    $(xrandr --output "${edpName}" --off)
+    $(xrandr --output "${vgaName}" --primary --auto)
+    $(xrandr --output "${hdmiName}" --off)
+  fi
+  echo "VGA"
+  echo "VGA"
+  echo
+# Only one internal
+elif [[ "$activeDisplays" =~ "${edpName}" ]]; then
+  if [[ "${change}" = "yes" ]]; then
+    $(xrandr --output "${edpName}" --primary --auto)
+    $(xrandr --output "${vgaName}" --off)
+    $(xrandr --output "${hdmiName}" --off)
+  fi
+  echo "eDP"
+  echo "eDP"
+  echo ""
+fi
+
+if [[ "${change}" = "yes" ]]; then
+  echo "${activeDisplays}" > "${displayFile}"
+fi

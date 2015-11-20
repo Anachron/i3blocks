@@ -1,0 +1,13 @@
+#!/bin/bash
+
+status=$(/lib/ufw/ufw-init status 2>/dev/null)
+
+if [[ $? -gt 3 ]]; then
+  exit
+fi
+
+if [[ "${status}" != 'Firewall is not running' ]]; then
+  echo "on"
+  echo "on"
+  echo ""
+fi

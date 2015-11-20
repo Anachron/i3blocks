@@ -1,0 +1,17 @@
+#!/bin/bash
+
+device="${BLOCK_INSTANCE:-wlan0}"
+status=$(cat /sys/class/net/${device}/operstate)
+
+if [[ "${status}" == "up" ]]; then
+  if [[ -d "/sys/class/net/${device}/wireless" ]]; then
+    quality=$(grep ${device} /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+    echo "${quality}%"
+    echo "${quality}%"
+    echo ""
+  else
+    echo "on"
+    echo "on"
+    echo ""
+  fi
+fi

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+info=$(pactl list cards | grep "analog-output-headphones")
+volume=$(amixer get Master | tail -n 1 | awk -F ' ' '{print $5}' | tr -d '[]')
+
+if [[ "${volume}" -gt 0 ]]; then
+  exit
+fi
+
+echo "${volume}"
+echo "${volume}"
+echo ""
