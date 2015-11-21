@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+
+pkg=$(pacman -Qu)
+
+if [[ $? -gt 0 ]]; then
+  return
+fi
+
+pkgCount=$(echo "${pkg}" | wc -l)
+
+if [[ "${pkgCount}" -gt 0 ]]; then
+  echo -e "${pkgCount}" # full-text
+  echo -e "${pkgCount}" # short-text
+  echo ""
+fi
