@@ -11,9 +11,9 @@ extdev-status ()
 [x]package-status ()
 memory-symbol ()
 memory-status (24%)
-cpu-symbol ()
-cpu-status (30%)
-load-symbol ()
+[x]cpu-symbol ()
+[x]cpu-status (30%)
+load-symbol ()
 load-status ()
 battery-symbol ()
 battery-strength (72%)
@@ -35,6 +35,6 @@ weather-status (12 C)
 clock-symbol ()
 clock (07:10)
 
-brightness
+[x]brightness
 locale
-display 
+[x]display
