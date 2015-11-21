@@ -30,11 +30,11 @@ microphone-strength (20%)
 bandwidth-symbol ()
 bandwidth-in ()
 bandwidth-out ()
-weather-type (sun, cloudy)
-weather-status (12 C)
-clock-symbol ()
-clock (07:10)
+[x]weather-type (sun, cloudy)
+[x]weather-status (12 C)
+[x]clock-symbol ()
+[x]clock (07:10)
 
 [x]brightness
-locale
+[x]locale
 [x]display
