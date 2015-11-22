@@ -1,0 +1,10 @@
+#!/bin/bash
+
+INSTANCE="${BLOCK_INSTANCE:-1}"
+
+LOAD=$(cat /proc/loadavg | awk -F ' ' '{print $'"${INSTANCE}"'}')
+if [[ "${LOAD}" != "" ]]; then
+  echo "${LOAD}"
+  echo "${LOAD}"
+  echo ""
+fi
