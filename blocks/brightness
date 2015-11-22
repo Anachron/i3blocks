@@ -1,15 +1,38 @@
 #!/bin/bash
 
-device="${BLOCK_INSTANCE:-intel_backlight}"
+device="${BLOCK_INSTANCE:-primary}"
 
-maxBrightness=$(cat /sys/class/backlight/${device}/max_brightness)
-curBrightness=$(cat /sys/class/backlight/${device}/brightness)
+# One of the following: xrandr, xbacklight, kernel
+METHOD="xrandr"
+
+if [[ "${METHOD}" = "xrandr" ]]; then
+  xrandrOutput=$(xrandr --verbose)
+
+  if [[ "${device}" = "primary" ]]; then
+    device=$(echo "${xrandrOutput}" | grep 'primary' | head -n 1 | awk -F ' ' '{print $1}')
+  fi
+
+  curBrightness=$(echo "${xrandrOutput}" | grep "${device}" -A 5 | grep -i "Brightness" | awk -F ':' '{print $2}')
+elif [[ "${METHOD}" = "kernel" ]]; then
+  maxBrightness=$(cat /sys/class/backlight/${device}/max_brightness)
+  curBrightness=$(cat /sys/class/backlight/${device}/brightness)
+elif [[ "${METHOD}" = "xbacklight" ]]; then
+  curBrightness=$(xbacklight -get)
+fi
 
 if [[ "${curBrightness}" -le 0 ]]; then
   exit
 fi
 
-percent=$(echo "scale=0;${curBrightness} / ${maxBrightness} * 100" | bc -l)
+if [[ "${METHOD}" = "xrandr" ]]; then
+  percent=$(echo "scale=0;${curBrightness} * 100" | bc -l)
+elif [[ "${METHOD}" = "kernel" ]]; then
+  percent=$(echo "scale=0;${curBrightness} / ${maxBrightness} * 100" | bc -l)
+elif [[ "${METHOD}" = "xbacklight" ]]; then
+  percent=$(echo "scale=0;${curBrightness}" | bc -l)
+fi
+
+percent=${percent%.*}
 
 if [[ "${percent}" -le 0 ]]; then
   exit
