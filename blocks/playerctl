@@ -19,11 +19,16 @@ elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
     $(playerctl ${ARGUMENTS} next)
 fi
 
+PLAYER_STATUS=$(playerctl status)
 INFO_TITLE=$(playerctl ${ARGUMENTS} metadata title)
 INFO_ALBUM=$(playerctl ${ARGUMENTS} metadata album)
 INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist)
 
-if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
+if [[ "${PLAYER_STATUS}" = "Paused" ]]; then
+  echo "<>"
+  echo "<>"
+  echo ""
+elif [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
   echo "${INFO_ARTIST} - ${INFO_TITLE}"
   echo "${INFO_ARTIST} - ${INFO_TITLE}"
   echo ""
