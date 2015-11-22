@@ -17,7 +17,7 @@ WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=
 
 WEATHER_INFO=$(wget -qO- "${WEATHER_URL}")
 WEATHER_MAIN=$(echo "${WEATHER_INFO}" | grep -o -e '\"main\":\"[a-Z]*\"' | awk -F ':' '{print $2}' | tr -d '"')
-WEATHER_TEMP=$(echo "${WEATHER_INFO}" | grep -o -e '\"temp\":[0-9]*' | awk -F ':' '{print $2}' | tr -d '"')
+WEATHER_TEMP=$(echo "${WEATHER_INFO}" | grep -o -e '\"temp\":\-\?[0-9]*' | awk -F ':' '{print $2}' | tr -d '"')
 
 if [[ "${WEATHER_MAIN}" = *Rain* ]]; then
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
@@ -32,5 +32,3 @@ elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
 fi
-
-#http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=GMXX0051
