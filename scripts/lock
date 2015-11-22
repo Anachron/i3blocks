@@ -1,0 +1,4 @@
+#!/bin/bash
+# See https://github.com/muennich/physlock
+
+physlock
