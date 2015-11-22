@@ -19,7 +19,7 @@ elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
     $(playerctl ${ARGUMENTS} next)
 fi
 
-PLAYER_STATUS=$(playerctl status)
+PLAYER_STATUS=$(playerctl ${ARGUMENTS} status)
 INFO_TITLE=$(playerctl ${ARGUMENTS} metadata title)
 INFO_ALBUM=$(playerctl ${ARGUMENTS} metadata album)
 INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist)
