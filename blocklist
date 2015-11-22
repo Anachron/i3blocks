@@ -19,8 +19,8 @@ memory-status (24%)
 [x]battery-strength (72%)
 [?]firewall-symbol ()
 [?]firewall-status (on/off)
-microphone-symbol
-microphone-strength (20%)
+[x]microphone-symbol
+[x]microphone-strength (20%)
 [x]webcam-symbol
 [x]webcam-status (on/off)
 [x]audio-device (speaker/headset)
