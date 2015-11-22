@@ -1,0 +1,30 @@
+#!/bin/bash
+# Based on https://aur.archlinux.org/packages/playerctl/
+
+INSTANCE="${BLOCK_INSTANCE}"
+
+if [[ "${INSTANCE}" != "" ]]; then
+  ARGUMENTS="--player ${INSTANCE}"
+fi
+
+ICON_PLAY=""
+ICON_PAUSE=""
+ICON_STOP=""
+
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+    $(playerctl  ${ARGUMENTS} previous)
+elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
+    $(playerctl ${ARGUMENTS} play-pause)
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+    $(playerctl ${ARGUMENTS} next)
+fi
+
+INFO_TITLE=$(playerctl ${ARGUMENTS} metadata title)
+INFO_ALBUM=$(playerctl ${ARGUMENTS} metadata album)
+INFO_ARTIST=$(playerctl ${ARGUMENTS} metadata artist)
+
+if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
+  echo "${INFO_ARTIST} - ${INFO_TITLE}"
+  echo "${INFO_ARTIST} - ${INFO_TITLE}"
+  echo ""
+fi
