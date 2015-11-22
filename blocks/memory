@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Check /proc/meminfo for possible instances
+INSTANCE="${BLOCK_INSTANCE:-MemAvailable}"
+
+ONE_KB=1024
+ONE_MB=$(echo "${ONE_KB}*1024" | bc -l)
+ONE_GB=$(echo "${ONE_MB}*1024" | bc -l)
+ONE_TB=$(echo "${ONE_GB}*1024" | bc -l)
+
+# Grep the value and remove KB so we can calculate with it later
+MEMINFO=$(cat /proc/meminfo | grep "${INSTANCE}" | awk -F ':' '{print $2}' | tr -d ' kB')
+
+# Convert KB meminfo to bytes
+MEMINFO=$(echo "${MEMINFO}*${ONE_KB}" | bc -l)
+
+if [[ "${MEMINFO}" -ge "${ONE_TB}" ]]; then
+  MEMINFO=$(echo "scale=3;${MEMINFO}/${ONE_TB}" | bc -l)"tb"
+elif [[ "${MEMINFO}" -ge "${ONE_GB}" ]]; then
+  MEMINFO=$(echo "scale=2;${MEMINFO}/${ONE_GB}" | bc -l)"gb"
+elif [[ "${MEMINFO}" -ge "${ONE_MB}" ]]; then
+  MEMINFO=$(echo "scale=1;${MEMINFO}/${ONE_MB}" | bc -l)"mb"
+else
+  MEMINFO=$(echo "scale=0;${MEMINFO}/${ONE_KB}" | bc -l)"kb"
+fi
+
+echo "${MEMINFO}"
+echo "${MEMINFO}"
+echo ""

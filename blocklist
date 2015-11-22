@@ -2,15 +2,12 @@
 [x]user-name (arch)
 media-status (stopped, playing)
 media-name ()
-extdev-symbol ()
-extdev-name ()
-extdev-status ()
 [x]caps-indicator ()
 [x]num-indicator ()
 [x]package-symbol ()
 [x]package-status ()
-memory-symbol ()
-memory-status (24%)
+[x]memory-symbol ()
+[x]memory-status (24%)
 [x]cpu-symbol ()
 [x]cpu-status (30%)
 [x]load-symbol ()
@@ -34,6 +31,8 @@ memory-status (24%)
 [x]weather-status (12 C)
 [x]clock-symbol ()
 [x]clock (07:10)
+[x]space-symbol()
+[x]space-status
 
 [x]brightness
 [x]locale
