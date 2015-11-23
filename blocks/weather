@@ -6,6 +6,9 @@ API_KEY="2de143494c0b295cca9337e1e96b00e0"
 # Check on http://openweathermap.org/find
 CITY_ID="${BLOCK_INSTANCE}"
 
+URGENT_LOWER=0
+URGENT_HIGHER=30
+
 ICON_SUNNY=""
 ICON_CLOUDY=""
 ICON_RAINY=""
@@ -36,4 +39,8 @@ elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
+fi
+
+if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -lt "${URGENT_HIGHER}" ]]; then
+  exit 33
 fi

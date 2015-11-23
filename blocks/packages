@@ -11,8 +11,8 @@ fi
 PACKAGE_COUNT=$(echo "${PACKAGES}" | wc -l)
 
 if [[ "${PACKAGE_COUNT}" -gt 0 ]]; then
-  echo -e "${PACKAGE_COUNT}" # full-text
-  echo -e "${PACKAGE_COUNT}" # short-text
+  echo "${PACKAGE_COUNT}" # full-text
+  echo "${PACKAGE_COUNT}" # short-text
   echo ""
   if [[ "${PACKAGE_COUNT}" -gt "${URGENT_VALUE}" ]]; then
     exit 33
