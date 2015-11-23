@@ -9,8 +9,8 @@ if [[ "${LOAD}" != "" ]]; then
   LOAD_PERC=$(echo "scale=0; ${LOAD} * 100" | bc -l)
   LOAD_PERC=${LOAD_PERC%.*}
 
-  echo "${LOAD_PERC}%"
-  echo "${LOAD_PERC}%"
+  echo "${LOAD}"
+  echo "${LOAD}"
   echo ""
 
   if [[ "${LOAD_PERC}" -ge "${URGENT_VALUE}" ]]; then
