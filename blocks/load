@@ -2,9 +2,18 @@
 
 INSTANCE="${BLOCK_INSTANCE:-1}"
 
+URGENT_VALUE=50
+
 LOAD=$(cat /proc/loadavg | awk -F ' ' '{print $'"${INSTANCE}"'}')
 if [[ "${LOAD}" != "" ]]; then
-  echo "${LOAD}"
-  echo "${LOAD}"
+  LOAD_PERC=$(echo "scale=0; ${LOAD} * 100" | bc -l)
+  LOAD_PERC=${LOAD_PERC%.*}
+
+  echo "${LOAD_PERC}%"
+  echo "${LOAD_PERC}%"
   echo ""
+
+  if [[ "${LOAD_PERC}" -ge "${URGENT_VALUE}" ]]; then
+    exit 33
+  fi
 fi
