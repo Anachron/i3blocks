@@ -1,16 +1,20 @@
 #!/usr/bin/bash
 
+PACKAGES=$(pacman -Qu)
 
-pkg=$(pacman -Qu)
+URGENT_VALUE=25
 
 if [[ $? -gt 0 ]]; then
   return
 fi
 
-pkgCount=$(echo "${pkg}" | wc -l)
+PACKAGE_COUNT=$(echo "${PACKAGES}" | wc -l)
 
-if [[ "${pkgCount}" -gt 0 ]]; then
-  echo -e "${pkgCount}" # full-text
-  echo -e "${pkgCount}" # short-text
+if [[ "${PACKAGE_COUNT}" -gt 0 ]]; then
+  echo -e "${PACKAGE_COUNT}" # full-text
+  echo -e "${PACKAGE_COUNT}" # short-text
   echo ""
+  if [[ "${PACKAGE_COUNT}" -gt "${URGENT_VALUE}" ]]; then
+    exit 33
+  fi
 fi

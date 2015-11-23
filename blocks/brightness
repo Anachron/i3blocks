@@ -3,6 +3,8 @@
 # One of the following: xrandr, xbacklight, kernel
 METHOD="xrandr"
 
+URGENT_VALUE=10
+
 if [[ "${METHOD}" = "xrandr" ]]; then
   device="${BLOCK_INSTANCE:-primary}"
   xrandrOutput=$(xrandr --verbose)
@@ -41,3 +43,7 @@ fi
 echo "${percent}%"
 echo "${percent}%"
 echo ""
+
+if [[ "${percent}" -le "${URGENT_VALUE}" ]]; then
+  exit 33
+fi

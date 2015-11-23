@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PROG="${BLOCK_INSTANCE:-i3}"
+
+PROG_REGEX="["$(echo "${PROG}" | cut -c 1)"]"$(echo "${PROG}" | cut -c 2-)" "
+PROCESS=$(ps -eo pid,cmd | grep -w ${PROG_REGEX})
+
+if [[ "${PROCESS}" ]]; then
+  echo "ok"
+  echo "ok"
+  echo ""
+else
+  echo "na"
+  echo "na"
+  echo ""
+  exit 33
+fi

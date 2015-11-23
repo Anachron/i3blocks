@@ -19,6 +19,8 @@ ONE_MB=$(echo "${ONE_KB}*1024" | bc -l)
 TEN_MB=$(echo "${ONE_MB}*10" | bc -l)
 OHD_MB=$(echo "${TEN_MB}*10" | bc -l)
 
+URGENT_VALUE="${ONE_MB}"
+
 PREV_IN=0
 PREV_OUT=0
 
@@ -57,6 +59,7 @@ if [[ "${PREV_IN}" != "" ]] && [[ "${PREV_OUT}" != "" ]]; then
   # Calculate the CPU usage since we last checked.
   DIFF_IN=$(echo "scale=0;${BYTES_IN} - ${PREV_IN}" | bc -l)
   DIFF_OUT=$(echo "scale=0;${BYTES_OUT} - ${PREV_OUT}" | bc -l)
+  DIFF_TOTAL=0
 
   USAGE_IN=$(FormatNumber "${DIFF_IN}")
   USAGE_OUT=$(FormatNumber "${DIFF_OUT}")
@@ -65,14 +68,18 @@ if [[ "${PREV_IN}" != "" ]] && [[ "${PREV_OUT}" != "" ]]; then
     echo "${USAGE_IN} : ${USAGE_OUT}"
     echo "${USAGE_IN} : ${USAGE_OUT}"
     echo ""
+    DIFF_TOTAL=$((DIFF_TOTAL+DIFF_IN))
+    DIFF_TOTAL=$((DIFF_TOTAL+DIFF_OUT))
   elif [[ "${DISPLAY}" = "in" ]]; then
     echo "${USAGE_IN}"
     echo "${USAGE_IN}"
     echo ""
+    DIFF_TOTAL=$((DIFF_TOTAL+DIFF_IN))
   elif [[ "${DISPLAY}" = "out" ]]; then
     echo "${USAGE_OUT}"
     echo "${USAGE_OUT}"
     echo ""
+    DIFF_TOTAL=$((DIFF_TOTAL+DIFF_OUT))
   fi
 else
   echo "?"
@@ -83,3 +90,7 @@ fi
 # Remember the total and idle CPU times for the next check.
 echo "${BYTES_IN}" > "${PREV_FILE}"
 echo "${BYTES_OUT}" >> "${PREV_FILE}"
+
+if [[ "${DIFF_TOTAL}" -ge "${URGENT_VALUE}" ]]; then
+  exit 33
+fi

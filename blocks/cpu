@@ -1,6 +1,8 @@
 #!/bin/bash
 # Source: http://askubuntu.com/a/450136
 
+URGENT_VALUE=90
+
 PREV_TOTAL=0
 PREV_IDLE=0
 
@@ -40,3 +42,7 @@ fi
 # Remember the total and idle CPU times for the next check.
 echo "${TOTAL}" > "${cpuFile}"
 echo "${IDLE}" >> "${cpuFile}"
+
+if [[ "${DIFF_USAGE}" -gt 0 ]] && [[ "${DIFF_USAGE}" -gt "${URGENT_VALUE}" ]]; then
+  exit 33
+fi
