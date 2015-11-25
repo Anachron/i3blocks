@@ -27,7 +27,7 @@ if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
   echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
-elif [[ "${WEATHER_MAIN}" = *Rain* ]]; then
+elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
@@ -38,6 +38,10 @@ elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
 elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+else
+  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
 fi
 
