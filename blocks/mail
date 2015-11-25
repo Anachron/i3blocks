@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Requires https://www.google.com/settings/security/lesssecureapps for gmail.
+
+CONFIG_FILE="${BLOCK_INSTANCE}"
+CONFIG_FILE=${CONFIG_FILE/\~/$HOME}
+
+# Config file needs the following settings:
+#MAIL_SERVER="imap.domain.tld:993"
+#MAIL_USER="user@domain.tld"
+#MAIL_PASSWORD="secret"
+#MAIL_FOLDER="INBOX"
+
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  echo "${CONFIG_FILE}"
+  exit
+fi
+
+source "${CONFIG_FILE}"
+
+MAIL_FILE="/tmp/.mail"
+URGENT_VALUE="100"
+
+GET_UNREAD=$(cat<<EOF
+? LOGIN "${MAIL_USER}" "${MAIL_PASSWORD}"
+? STATUS "${MAIL_FOLDER}" (unseen)
+? LOGOUT
+EOF
+)
+
+echo "${GET_UNREAD}" | openssl s_client -connect "${MAIL_SERVER}" -crlf -ign_eof > "${MAIL_FILE}" 2>/dev/null 
+UNREAD_COUNT=$(cat "${MAIL_FILE}" | grep -i "UNSEEN" | grep -oE "[0-9]*" | head -n 1)
+
+# For security reasons
+rm "${MAIL_FILE}"
+
+if [[ "${UNREAD_COUNT}" = "" ]]; then
+  exit
+fi
+
+echo "${UNREAD_COUNT}"
+echo "${UNREAD_COUNT}"
+echo ""
+
+if [[ "${UNREAD_COUNT}" -ge URGENT_VALUE ]]; then
+  exit 33
+fi
