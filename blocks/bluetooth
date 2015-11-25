@@ -1,0 +1,9 @@
+#!/bin/bash
+
+STATUS=$(bluetooth | grep -wo 'on')
+
+if [[ "${STATUS}" = "on" ]]; then
+  echo "on"
+  echo "on"
+  echo ""
+fi
