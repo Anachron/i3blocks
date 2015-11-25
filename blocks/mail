@@ -13,7 +13,7 @@ CONFIG_FILE=${CONFIG_FILE/\~/$HOME}
 
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   echo "${CONFIG_FILE}"
-  exit
+  exit 33
 fi
 
 source "${CONFIG_FILE}"
