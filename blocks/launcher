@@ -1,0 +1,26 @@
+#!/bin/bash
+
+CONFIG_FILE="${BLOCK_INSTANCE:-~/.config/i3/config}"
+CONFIG_FILE=${CONFIG_FILE/\~/$HOME}
+
+LAUNCH_CMD=$(cat "${CONFIG_FILE}" | grep -v "^#" | grep -wi 'rofi\|dmenu' | awk -F 'exec ' '{print $2}')
+LAUNCH_NAME=$(echo "${LAUNCH_CMD}" |  awk -F ' ' '{print $1}')
+
+VARIABLES=$(cat "${CONFIG_FILE}" | grep -E 'set\ \$' | awk -F ' ' '{$1 = "";print $0}')
+
+while read varPair; do
+  varName=$(echo "${varPair}" | awk -F ' ' '{print $1}')
+  varValue=$(echo "${varPair}" | awk -F ' ' '{print $2}')
+  #echo "Replacing ${varName} with ${varValue}"
+  LAUNCH_CMD=$(echo ${LAUNCH_CMD} | sed "s|$varName|$varValue|g")
+done <<< "$(echo -e "$VARIABLES")"
+
+#echo "${LAUNCH_CMD}" && exit
+
+echo "${LAUNCH_NAME}"
+echo "${LAUNCH_NAME}"
+echo ""
+
+if [[ "${BLOCK_BUTTON}" -gt 0 ]]; then
+  eval ${LAUNCH_CMD} &
+fi
