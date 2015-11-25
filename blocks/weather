@@ -41,6 +41,6 @@ elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
   echo ""
 fi
 
-if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -lt "${URGENT_HIGHER}" ]]; then
+if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then
   exit 33
 fi
