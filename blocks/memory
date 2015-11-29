@@ -24,8 +24,14 @@ ONE_TB=$(echo "${ONE_GB}*1024" | bc -l)
 
 # Grep the value and remove KB so we can calculate with it later
 #MEMINFO=$(cat /proc/meminfo | grep "${INSTANCE}" | awk -F ':' '{print $2}' | tr -d ' kB')
-SOURCE_TOTAL=$(cat /proc/meminfo | grep -i "${SOURCE}total" | awk -F ':' '{print $2}' | tr -d ' kB')
-SOURCE_FREE=$(cat /proc/meminfo | grep -i "${SOURCE}available" | awk -F ':' '{print $2}' | tr -d ' kB')
+MEMORY_INFOS=$(cat /proc/meminfo)
+SOURCE_TOTAL=$(echo "${MEMORY_INFOS}" | grep -i "${SOURCE}total" | awk -F ':' '{print $2}' | tr -d ' kB')
+
+if [[ "${SOURCE_TOTAL}" -le 0 ]]; then
+  exit
+fi
+
+SOURCE_FREE=$(echo "${MEMORY_INFOS}" | grep -i "${SOURCE}available" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_USED=$(echo "scale=0; ${SOURCE_TOTAL}-${SOURCE_FREE}" | bc -l)
 SOURCE_PERC=$(echo "scale=0; (${SOURCE_USED}*100)/${SOURCE_TOTAL}" | bc -l)
 
