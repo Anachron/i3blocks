@@ -26,6 +26,9 @@ ONE_TB=$(echo "${ONE_GB}*1024" | bc -l)
 #MEMINFO=$(cat /proc/meminfo | grep "${INSTANCE}" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_TOTAL=$(cat /proc/meminfo | grep -i "${SOURCE}total" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_FREE=$(cat /proc/meminfo | grep -i "${SOURCE}available" | awk -F ':' '{print $2}' | tr -d ' kB')
+if [[ "${SOURCE_FREE}" = "" ]]; then
+  exit
+fi
 SOURCE_USED=$(echo "scale=0; ${SOURCE_TOTAL}-${SOURCE_FREE}" | bc -l)
 SOURCE_PERC=$(echo "scale=0; (${SOURCE_USED}*100)/${SOURCE_TOTAL}" | bc -l)
 
