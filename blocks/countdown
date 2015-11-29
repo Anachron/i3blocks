@@ -13,6 +13,13 @@ CUR_DATE=$(date "+%s")
 DIFF_DATE=$((END_DATE - CUR_DATE))
 DIFF=""
 
+if [[ "${DIFF_DATE}" -le 0 ]]; then
+  echo "${END_DATE}"
+  echo "${END_DATE}"
+  echo ""
+  exit 33
+fi
+
 if [[ "${DIFF_DATE}" -ge 86400 ]]; then
   DIFF="[$((DIFF_DATE / 86400))] "
   #DIFF_DATE=$((DIFF_DATE % 86400))
