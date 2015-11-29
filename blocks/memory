@@ -36,7 +36,7 @@ elif [[ "${DISPLAY}" = "used" ]]; then
 elif [[ "${DISPLAY}" = "total" ]]; then
   MEMINFO="${SOURCE_TOTAL}"
 elif [[ "${DISPLAY}" = "perc" ]]; then
-  MEMINFO="${SOURCE_PERC}"
+  MEMINFO="${SOURCE_PERC}%"
 fi
 
 if [[ "${DISPLAY}" != "perc" ]]; then
