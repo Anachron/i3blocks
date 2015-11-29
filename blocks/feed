@@ -1,0 +1,16 @@
+#!/bin/bash
+
+FEED_URL="${BLOCK_INSTANCE:-https://www.archlinux.org/feeds/news/}"
+
+FEED_CONTENT=$(curl "${FEED_URL}" -s)
+FEED_ARTICLE=$(echo "${FEED_CONTENT}" | grep -v "xmlns:atom" | grep "pubDate" | head -n 1)
+FEED_TITLE=$(echo "${FEED_ARTICLE}" | grep -o '<title>.*</title>' | sed 's/\(<title>\|<\/title>\)//g')
+FEED_URL=$(echo "${FEED_ARTICLE}"  | grep -o '<link>.*</link>' | sed 's/\(<link>\|<\/link>\)//g')
+
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  xdg-open "${FEED_URL}"
+fi
+
+echo "${FEED_TITLE}"
+echo "${FEED_TITLE}"
+echo ""
