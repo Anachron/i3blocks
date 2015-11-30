@@ -21,4 +21,8 @@ if [[ "${status}" != *inctive* ]]; then
   echo "on"
   echo "on"
   echo ""
+else
+  echo "off"
+  echo "off"
+  echo ""
 fi

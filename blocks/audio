@@ -11,12 +11,16 @@ elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
   amixer -q sset Master 5%-
 fi
 
-volume=$(amixer get Master | tail -n 1 | awk -F ' ' '{print $5}' | tr -d '[]')
+statusLine=$(amixer get Master | tail -n 1)
+status=$(echo "${statusLine}" | grep -wo "on")
+volume=$(echo "${statusLine}" | awk -F ' ' '{print $5}' | tr -d '[]%')
 
-if [[ "${volume}" -gt 0 ]]; then
-  exit
+if [[ "${status}" == "on" ]]; then
+  echo "${volume}%"
+  echo "${volume}%"
+  echo ""
+else
+  echo "off"
+  echo "off"
+  echo ""
 fi
-
-echo "${volume}"
-echo "${volume}"
-echo ""
