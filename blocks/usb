@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DEVICE_NAME="${BLOCK_INSTANCE:-Keyboard}"
+
+DEVICE_INFO=$(lsusb | grep -i "${DEVICE_NAME}")
+
+if [[ "${DEVICE_INFO}" != "" ]]; then
+  echo "on"
+  echo "on"
+  echo ""
+else
+  echo "na"
+  echo "na"
+  echo ""
+fi
