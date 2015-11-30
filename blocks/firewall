@@ -1,12 +1,23 @@
 #!/bin/bash
 
-status=$(/lib/ufw/ufw-init status 2>/dev/null)
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  sudo ufw enable
+# Middle click
+elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
+  sudo ufw reload
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  sudo ufw disable
+fi
 
-if [[ $? -gt 3 ]]; then
+status=$(sudo ufw status 2>/dev/null)
+
+if [[ $? -gt 0 ]]; then
   exit
 fi
 
-if [[ "${status}" != 'Firewall is not running' ]]; then
+if [[ "${status}" != *inctive* ]]; then
   echo "on"
   echo "on"
   echo ""
