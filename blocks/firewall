@@ -17,7 +17,7 @@ if [[ $? -gt 0 ]]; then
   exit
 fi
 
-if [[ "${status}" != *inctive* ]]; then
+if [[ "${status}" != *inactive* ]]; then
   echo "on"
   echo "on"
   echo ""
