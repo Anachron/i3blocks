@@ -1,0 +1,32 @@
+#!/bin/bash
+
+TRASH_DIRECTORY="${BLOCK_INSTANCE}"
+
+if [[ "${TRASH_DIRECTORY}" = "" ]]; then
+  TRASH_DIRECTORY="${XDG_DATA_HOME:-${HOME}/.local/share}/Trash"
+fi
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  xdg-open "${TRASH_DIRECTORY}/files"
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  # Delete all files permanently (unlink them)
+  rm -r "${TRASH_DIRECTORY}/files"
+  rm -r "${TRASH_DIRECTORY}/info"
+  # Create new directory
+  mkdir "${TRASH_DIRECTORY}/files"
+  mkdir "${TRASH_DIRECTORY}/info"
+fi
+
+TRASH_COUNT=$(ls -U -1 "${TRASH_DIRECTORY}/files" | wc -l)
+
+URGENT_VALUE=100
+
+echo "${TRASH_COUNT}"
+echo "${TRASH_COUNT}"
+echo ""
+
+if [[ "${TRASH_COUNT}" -ge "${URGENT_VALUE}" ]]; then
+  exit 33
+fi
