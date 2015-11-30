@@ -1,7 +1,15 @@
 #!/bin/bash
 
 # One of the following: xrandr, xbacklight, kernel
-METHOD="xrandr"
+METHOD="xbacklight"
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  xbacklight -inc 5
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  xbacklight -dec 5
+fi
 
 URGENT_VALUE=10
 
