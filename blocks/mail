@@ -18,6 +18,18 @@ fi
 
 source "${CONFIG_FILE}"
 
+MAIN_DOMAIN=$(expr match "${MAIL_SERVER}" '.*\.\(.*\..*\)' | awk -F ':' '{print $1}')
+
+# Add https so xdg knows that it's a website
+if [[ "${MAIN_DOMAIN}" != http* ]]; then
+  MAIN_DOMAIN="https://${MAIN_DOMAIN}"
+fi
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  xdg-open "${MAIN_DOMAIN}"
+fi
+
 MAIL_FILE="/tmp/.mail"
 URGENT_VALUE="100"
 
