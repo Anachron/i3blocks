@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  amixer -q sset Master 5%+
+# Middle click
+elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
+  amixer -q sset Master toggle
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  amixer -q sset Master 5%-
+fi
+
 volume=$(amixer get Master | tail -n 1 | awk -F ' ' '{print $5}' | tr -d '[]')
 
 if [[ "${volume}" -gt 0 ]]; then
