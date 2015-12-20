@@ -8,10 +8,12 @@ else
   INFO_PLYCTL=$(playerctl metadata 2>/dev/null)
 
   if [[ $? -eq 0 ]]; then
+    PROG="playerctl"
     INFO_TITLE=$(playerctl metadata title)
     INFO_ALBUM=$(playerctl metadata album)
     INFO_ARTIST=$(playerctl metadata artist)
   else
+    PROG="cmus-remote"
     INFO_CMUS=$(cmus-remote -Q 2>/dev/null)
     if [[ $? -eq 0 ]]; then
       INFO_TITLE=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*title//p' | head -n 1)
