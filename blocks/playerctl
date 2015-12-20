@@ -13,7 +13,7 @@ ICON_STOP="≠"
 CUR_ICON=""
 
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
-    $(playerctl  ${ARGUMENTS} previous)
+    $(playerctl ${ARGUMENTS} previous)
 elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
     $(playerctl ${ARGUMENTS} play-pause)
 elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
