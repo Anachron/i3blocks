@@ -2,8 +2,19 @@
 
 PROG="${BLOCK_INSTANCE}"
 
+INTERVAL=0.17
+MAX_LENGTH=25
+ADD_STR=" | "
+ADD_LENGTH=${#ADD_STR}
+
 if [[ "${PROG}" != "" ]]; then
   OUT_TEXT=$(eval "${PROG}")
+  if [[ $? -ne 0 ]]; then
+    sleep 1
+    echo "${PROG}"
+    echo "${PROG}"
+    exit 33
+  fi
 else
   INFO_PLYCTL=$(playerctl metadata 2>/dev/null)
 
@@ -20,7 +31,7 @@ else
       INFO_ALBUM=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*album//p' | head -n 1)
       INFO_ARTIST=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*artist//p' | head -n 1)
     else
-      sleep 0.17
+      sleep 1
       exit
     fi
   fi
@@ -32,48 +43,39 @@ else
   fi
 fi
 
-CHECK_SUM=$(echo "${PROG}" | md5sum | awk '{print $1}')
-
-MAX_LENGTH=25
-
-TMP_FILE="/tmp/.scroll-${CHECK_SUM}"
-ADD_STR=" | "
-ADD_LENGTH=${#ADD_STR}
-
-if [[ -f "${TMP_FILE}" ]]; then
-  SCROLL_POS=$(cat "${TMP_FILE}")
-else
-  SCROLL_POS=0
-fi
-
-TEXT_LENGTH=${#OUT_TEXT}
-MAX_OFFSET=$((TEXT_LENGTH +ADD_LENGTH -1))
-
-if [[ "${TEXT_LENGTH}" -lt "${MAX_LENGTH}" ]]; then
-  MAX_LENGTH="${TEXT_LENGTH}"
-fi
-
-if [[ "${SCROLL_POS}" -gt "${MAX_OFFSET}" ]]; then
-  SCROLL_POS=0
-fi
-
-TEXT_LINE="${OUT_TEXT}${ADD_STR}${OUT_TEXT}${ADD_STR}${OUT_TEXT}"
-TEXT_LINE=${TEXT_LINE:$SCROLL_POS:$MAX_LENGTH}
-
 if [[ "${OUT_TEXT}" ]]; then
+  CHECK_SUM=$(echo "${PROG}" | md5sum | awk '{print $1}')
+
+  TMP_FILE="/tmp/.scroll-${CHECK_SUM}"
+
+  if [[ -f "${TMP_FILE}" ]]; then
+    SCROLL_POS=$(cat "${TMP_FILE}")
+  else
+    SCROLL_POS=0
+  fi
+
+  TEXT_LENGTH=${#OUT_TEXT}
+  MAX_OFFSET=$((TEXT_LENGTH +ADD_LENGTH -1))
+
+  if [[ "${TEXT_LENGTH}" -lt "${MAX_LENGTH}" ]]; then
+    MAX_LENGTH="${TEXT_LENGTH}"
+  fi
+
+  if [[ "${SCROLL_POS}" -gt "${MAX_OFFSET}" ]]; then
+    SCROLL_POS=0
+  fi
+
+  TEXT_LINE="${OUT_TEXT}${ADD_STR}${OUT_TEXT}${ADD_STR}${OUT_TEXT}"
+  TEXT_LINE=${TEXT_LINE:$SCROLL_POS:$MAX_LENGTH}
+
   echo "<span font_family='monospace'>${TEXT_LINE}</span>"
   echo "<span font_family='monospace'>${TEXT_LINE}</span>"
   echo ""
-else
-  echo "${PROG}"
-  echo "${PROG}"
-  echo ""
+
+  SCROLL_POS=$((SCROLL_POS +1))
+
+  echo "${SCROLL_POS}" > "${TMP_FILE}"
   sleep 0.17
-  exit 33
+else
+  sleep 1
 fi
-
-SCROLL_POS=$((SCROLL_POS +1))
-
-echo "${SCROLL_POS}" > "${TMP_FILE}"
-
-sleep 0.17
