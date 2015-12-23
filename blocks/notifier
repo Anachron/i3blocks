@@ -25,25 +25,25 @@ BLOCK_URGENT=$?
 
 # Nothing to display.
 if [[ "${BLOCK_OUT}" == "" ]]; then
-  exit
+  exit "${BLOCK_URGENT}"
 fi
 
-BLOCK_DESC=$(echo "${BLOCK_OUT}" | head -n 1)
-BLOCK_VALUE=$(echo "${BLOCK_OUT}" | tail -n 1)
-BLOCK_UCFIRST=$(echo "${BLOCK_NAME}" | head -c 1 | tr [a-z] [A-Z]; echo "${BLOCK_NAME}" | tail -c +2)
-
-BLOCK_ICON=""
 NOTIFY=0
 
 NOTIFY_CHANGES="weather display"
 NOTIFY_ALWAYS=""
 NOTIFY_NEVER="launcher playerctl scroll"
 
-CHECK_SUM=$(echo "${BLOCK_NAME}-${BLOCK_INSTANCE}" | md5sum | awk '{print $1}')
-CACHE_FILE="/tmp/.notify-cache-${CHECK_SUM}"
-
 if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
-  
+  BLOCK_UCFIRST=$(echo "${BLOCK_NAME}" | head -c 1 | tr [a-z] [A-Z]; echo "${BLOCK_NAME}" | tail -c +2)
+
+  CHECK_SUM=$(echo "${BLOCK_NAME}-${BLOCK_INSTANCE}" | md5sum | awk '{print $1}')
+  CACHE_FILE="/tmp/.notify-cache-${CHECK_SUM}"
+
+  BLOCK_DESC=$(echo "${BLOCK_OUT}" | head -n 1)
+  BLOCK_VALUE=$(echo "${BLOCK_OUT}" | tail -n 1)
+  BLOCK_ICON=""
+
   if [[ "${NOTIFY_ALWAYS}" == *${BLOCK_NAME}* ]]; then
     NOTIFY=1
   elif [[ "${BLOCK_URGENT}" -gt 0 ]]; then
