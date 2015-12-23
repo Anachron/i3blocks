@@ -1,0 +1,110 @@
+#!/bin/bash
+# IMPORTANT: 
+# To make this block work, you have to edit your block-command.
+# It should point to this file. For best performance, only use it on blocks
+# you want to monitor.
+# 
+# Example:
+# command=~/.i3-blocks/blocks/notifier $BLOCK_NAME
+
+BLOCK_NAME="${1}"
+
+if [[ "${BLOCK_NAME}" == "" ]] || [[ "${BLOCK_NAME}" == "notifier" ]]; then
+  exit 1
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BLOCK_PATH="${SCRIPT_DIR}/${BLOCK_NAME}"
+
+if [[ ! -f "${BLOCK_PATH}" ]]; then
+  exit 1
+fi
+
+BLOCK_OUT=$(bash "${BLOCK_PATH}")
+BLOCK_URGENT=$?
+
+# Nothing to display.
+if [[ "${BLOCK_OUT}" == "" ]]; then
+  exit
+fi
+
+BLOCK_DESC=$(echo "${BLOCK_OUT}" | head -n 1)
+BLOCK_VALUE=$(echo "${BLOCK_OUT}" | tail -n 1)
+BLOCK_UCFIRST=$(echo "${BLOCK_NAME}" | head -c 1 | tr [a-z] [A-Z]; echo "${BLOCK_NAME}" | tail -c +2)
+
+BLOCK_ICON=""
+NOTIFY=0
+
+NOTIFY_CHANGES="weather display"
+NOTIFY_ALWAYS=""
+NOTIFY_NEVER="launcher playerctl scroll"
+
+CHECK_SUM=$(echo "${BLOCK_NAME}-${BLOCK_INSTANCE}" | md5sum | awk '{print $1}')
+CACHE_FILE="/tmp/.notify-cache-${CHECK_SUM}"
+
+if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
+  
+  if [[ "${NOTIFY_ALWAYS}" == *${BLOCK_NAME}* ]]; then
+    NOTIFY=1
+  elif [[ "${BLOCK_URGENT}" -gt 0 ]]; then
+    NOTIFY=1
+  fi
+
+  if [[ "${BLOCK_NAME}" == "audio" ]]; then
+    BLOCK_MESSAGE="Audio level changed to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "bandwidth" ]]; then
+    BLOCK_MESSAGE="Traffic went to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "battery" ]]; then
+    BLOCK_MESSAGE="Energy changed to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "countdown" ]]; then
+    BLOCK_MESSAGE="Remaining time is now ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "cpu" ]]; then
+    BLOCK_MESSAGE="CPU utilization is now ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "feed" ]]; then
+    BLOCK_MESSAGE="Newest article is ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "mail" ]]; then
+    BLOCK_MESSAGE="Unread emails went to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "memory" ]]; then
+    BLOCK_MESSAGE="Memory utilization is now ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "packages" ]]; then
+    BLOCK_MESSAGE="${BLOCK_VALUE} packages are now ready to update."
+  elif [[ "${BLOCK_NAME}" == "space" ]]; then
+    BLOCK_MESSAGE="Space utilization is now ${BLOCK_INSTANCE}."
+  elif [[ "${BLOCK_NAME}" == "ssid" ]]; then
+    BLOCK_MESSAGE="SSID changed to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "temperature" ]]; then
+    BLOCK_MESSAGE="Sensor temperature changed to ${BLOCK_VALUE}."
+  elif [[ "${BLOCK_NAME}" == "trash" ]]; then
+    BLOCK_MESSAGE="${BLOCK_VALUE} items are now in the trash."
+  else
+    BLOCK_MESSAGE="${BLOCK_UCFIRST} is now ${BLOCK_VALUE}."
+  fi
+
+  VALUE_CHANGED=0
+  if [[ -f "${CACHE_FILE}" ]]; then
+    CACHED_VALUE=$(cat "${CACHE_FILE}")
+    if [[ "${BLOCK_VALUE}" != "${CACHED_VALUE}" ]]; then
+      VALUE_CHANGED=1
+      if [[ "${NOTIFY_CHANGES}" == *${BLOCK_NAME}* ]]; then
+        NOTIFY=1
+      fi
+    else
+      NOTIFY=0
+    fi
+  elif [[ "${NOTIFY_CHANGES}" == *${BLOCK_NAME}* ]]; then
+    NOTIFY=1
+  fi
+
+  if [[ "${NOTIFY}" -eq 1 ]]; then
+    if [[ "${BLOCK_URGENT}" -gt 0 ]]; then
+      notify-send -u critical -t 5000 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "Warning: ${BLOCK_MESSAGE}"
+    else
+      notify-send -u normal -t 3500 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "Info: ${BLOCK_MESSAGE}"
+    fi
+  fi
+
+  echo "${BLOCK_VALUE}" > "${CACHE_FILE}"
+fi
+
+echo "${BLOCK_OUT}"
+exit "${BLOCK_URGENT}"
