@@ -103,7 +103,9 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
     fi
   fi
 
-  echo "${BLOCK_VALUE}" > "${CACHE_FILE}"
+  if [[ "${VALUE_CHANGED}" -eq 1 ]]; then
+    echo "${BLOCK_VALUE}" > "${CACHE_FILE}"
+  fi
 fi
 
 echo "${BLOCK_OUT}"
