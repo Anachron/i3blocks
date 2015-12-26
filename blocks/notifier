@@ -81,7 +81,9 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
   fi
 
   VALUE_CHANGED=0
+  HAS_CACHEFILE=0
   if [[ -f "${CACHE_FILE}" ]]; then
+    HAS_CACHEFILE=1
     CACHED_VALUE=$(cat "${CACHE_FILE}")
     if [[ "${BLOCK_VALUE}" != "${CACHED_VALUE}" ]]; then
       VALUE_CHANGED=1
@@ -103,7 +105,7 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
     fi
   fi
 
-  if [[ "${VALUE_CHANGED}" -eq 1 ]]; then
+  if [[ "${VALUE_CHANGED}" -eq 1 ]] || [[ "${HAS_CACHEFILE}" -eq 0 ]]; then
     echo "${BLOCK_VALUE}" > "${CACHE_FILE}"
   fi
 fi
