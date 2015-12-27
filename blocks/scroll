@@ -5,7 +5,7 @@
 # which are wide and that you need to scroll.
 # 
 # Example:
-# command=~/.i3-blocks/blocks/notifier $BLOCK_NAME
+# command=~/.i3-blocks/blocks/scroll $BLOCK_NAME
 # markup=pango
 # interval=repeat
 
