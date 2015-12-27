@@ -1,4 +1,13 @@
 #!/bin/bash
+# IMPORTANT: 
+# To make this block work, you have to edit your block-command.
+# It should point to this file. For best performance, only use it on blocks
+# which are wide and that you need to scroll.
+# 
+# Example:
+# command=~/.i3-blocks/blocks/notifier $BLOCK_NAME
+# markup=pango
+# interval=repeat
 
 PROG="${1}"
 
