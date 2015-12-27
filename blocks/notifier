@@ -85,6 +85,9 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
   if [[ -f "${CACHE_FILE}" ]]; then
     HAS_CACHEFILE=1
     CACHED_VALUE=$(cat "${CACHE_FILE}")
+    #MODIFIED_TIME=$(stat -c '%Y' "${CACHE_FILE}")
+    #CURRENT_TIME=$(date +%s)
+    #ELAPSED_TIME=$((MODIFIED_TIME - CURRENT_TIME))
     if [[ "${BLOCK_VALUE}" != "${CACHED_VALUE}" ]]; then
       VALUE_CHANGED=1
       if [[ "${NOTIFY_CHANGES}" == *${BLOCK_NAME}* ]]; then

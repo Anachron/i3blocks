@@ -1,45 +1,25 @@
 #!/bin/bash
 
-PROG="${BLOCK_INSTANCE}"
+PROG="${1}"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BLOCK_PATH="${SCRIPT_DIR}/${PROG}"
 
 INTERVAL=0.17
 MAX_LENGTH=25
 ADD_STR=" | "
 ADD_LENGTH=${#ADD_STR}
 
-if [[ "${PROG}" != "" ]]; then
-  OUT_TEXT=$(eval "${PROG}")
+if [[ -f "${BLOCK_PATH}" ]]; then
+  BLOCK_OUT=$(bash "${BLOCK_PATH}")
+  OUT_TEXT=$(echo "${BLOCK_OUT}" | tail -n 1)
+elif [[ "${PROG}" != "" ]]; then
+  OUT_TEXT=$(${PROG})
   if [[ $? -ne 0 ]]; then
     sleep 1
     echo "${PROG}"
     echo "${PROG}"
     exit 33
-  fi
-else
-  INFO_PLYCTL=$(playerctl metadata 2>/dev/null)
-
-  if [[ $? -eq 0 ]]; then
-    PROG="playerctl"
-    INFO_TITLE=$(playerctl metadata title)
-    INFO_ALBUM=$(playerctl metadata album)
-    INFO_ARTIST=$(playerctl metadata artist)
-  else
-    PROG="cmus-remote"
-    INFO_CMUS=$(cmus-remote -Q 2>/dev/null)
-    if [[ $? -eq 0 ]]; then
-      INFO_TITLE=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*title//p' | head -n 1)
-      INFO_ALBUM=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*album//p' | head -n 1)
-      INFO_ARTIST=$(echo "${INFO_CMUS}" | sed -n -e 's/^.*artist//p' | head -n 1)
-    else
-      sleep 1
-      exit
-    fi
-  fi
-
-  if [[ "${INFO_ARTIST}" ]] && [[ "${INFO_TITLE}" ]]; then
-    OUT_TEXT=$(echo "${INFO_ARTIST} - ${INFO_TITLE}" | xargs)
-  elif [[ "${INFO_TITLE}" ]]; then
-    OUT_TEXT=$(echo "${INFO_TITLE}" | xargs)
   fi
 fi
 
@@ -70,12 +50,11 @@ if [[ "${OUT_TEXT}" ]]; then
 
   echo "<span font_family='monospace'>${TEXT_LINE}</span>"
   echo "<span font_family='monospace'>${TEXT_LINE}</span>"
-  echo ""
 
   SCROLL_POS=$((SCROLL_POS +1))
 
   echo "${SCROLL_POS}" > "${TMP_FILE}"
-  sleep 0.17
+  sleep "${INTERVAL}"
 else
   sleep 1
 fi
