@@ -9,6 +9,19 @@ All scripts are written in bash. Every script should be optimized for performanc
 Some scripts (like display) also change your computers behaving!
 Please be very careful when you include those into your i3blocks.
 
+## Screenshots
+![audio bandwidth battery](scrots/audio_bandwidth_battery.png)
+![bluetooth brightness countdown](scrots/bluetooth_brightness_countdown.png)
+![cpu datetime display](scrots/cpu_datetime_display.png)
+![feed firewall ip-address](scrots/feed_firewall_ip-address.png)
+![keystate launcher load](scrots/keystate_launcher_load.png)
+![locale mail memory](scrots/locale_mail_memory.png)
+![microphone network packages](scrots/microphone_network_packages.png)
+![playerctl process space](scrots/playerctl_process_space.png)
+![ssid user temperature](scrots/ssid_user_temperature.png)
+![usb trash scroll](scrots/usb_trash_scroll.png)
+![vpn weather webcam](scrots/vpn_weather_webcam.png)
+
 ## Blocks
 
 ### Audio
@@ -333,19 +346,6 @@ Example config:
 label=
 interval=5
 ```
-
-## Screenshots
-![audio bandwidth battery](scrots/audio_bandwidth_battery.png)
-![bluetooth brightness countdown](scrots/bluetooth_brightness_countdown.png)
-![cpu datetime display](scrots/cpu_datetime_display.png)
-![feed firewall ip-address](scrots/feed_firewall_ip-address.png)
-![keystate launcher load](scrots/keystate_launcher_load.png)
-![locale mail memory](scrots/locale_mail_memory.png)
-![microphone network packages](scrots/microphone_network_packages.png)
-![playerctl process space](scrots/playerctl_process_space.png)
-![ssid user temperature](scrots/ssid_user_temperature.png)
-![usb trash scroll](scrots/usb_trash_scroll.png)
-![vpn weather webcam](scrots/vpn_weather_webcam.png)
 
 ## Authors
 Anachron ([https://github.com/Anachron](github profile))
