@@ -80,6 +80,76 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
     BLOCK_MESSAGE="${BLOCK_UCFIRST} is now ${BLOCK_VALUE}."
   fi
 
+  if [[ "${BLOCK_NAME}" == "audio" ]]; then
+    BLOCK_ICON="audio-volume-high-symbolic"
+  elif [[ "${BLOCK_NAME}" == "bandwidth" ]]; then
+    BLOCK_ICON="network-wireless-acquiring-symbolic"
+  elif [[ "${BLOCK_NAME}" == "battery" ]]; then
+    BLOCK_ICON="battery-symbolic"
+  elif [[ "${BLOCK_NAME}" == "bluetooth" ]]; then
+    BLOCK_ICON="bluetooth-active-symbolic"
+  elif [[ "${BLOCK_NAME}" == "brightness" ]]; then
+    BLOCK_ICON="display-brightness-symbolic"
+  elif [[ "${BLOCK_NAME}" == "cmus" ]]; then
+    BLOCK_ICON="emblem-music-symbolic"
+  elif [[ "${BLOCK_NAME}" == "countdown" ]]; then
+    BLOCK_ICON="document-open-recent-symbolic"
+  elif [[ "${BLOCK_NAME}" == "cpu" ]]; then
+    BLOCK_ICON="indicator-cpufreq"
+  elif [[ "${BLOCK_NAME}" == "datetime" ]]; then
+    BLOCK_ICON="system-run-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "device" ]]; then
+    BLOCK_ICON="system-run-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "display" ]]; then
+    BLOCK_ICON="video-display-symbolic"
+  elif [[ "${BLOCK_NAME}" == "feed" ]]; then
+    BLOCK_ICON="folder-documents-symbolic"
+  elif [[ "${BLOCK_NAME}" == "firewall" ]]; then
+    BLOCK_ICON="changes-prevent-symbolic.svg" # TODO
+  elif [[ "${BLOCK_NAME}" == "ip-address" ]]; then
+    BLOCK_ICON="avatar-default-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "keystate" ]]; then
+    BLOCK_ICON="format-text-underline-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "launcher" ]]; then
+    BLOCK_ICON="system-run-symbolic"
+  elif [[ "${BLOCK_NAME}" == "load" ]]; then
+    BLOCK_ICON="indicator-cpufreq" # TODO
+  elif [[ "${BLOCK_NAME}" == "locale" ]]; then
+    BLOCK_ICON="format-text-larger-symbolic"
+  elif [[ "${BLOCK_NAME}" == "mail" ]]; then
+    BLOCK_ICON="mail-send-symbolic"
+  elif [[ "${BLOCK_NAME}" == "memory" ]]; then
+    BLOCK_ICON="drive-harddisk-solidstate-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "microphone" ]]; then
+    BLOCK_ICON="audio-input-microphone-symbolic"
+  elif [[ "${BLOCK_NAME}" == "network" ]]; then
+    BLOCK_ICON="network-wireless-connected-symbolic"
+  elif [[ "${BLOCK_NAME}" == "packages" ]]; then
+    BLOCK_ICON="view-refresh-symbolic"
+  elif [[ "${BLOCK_NAME}" == "playerctl" ]]; then
+    BLOCK_ICON="emblem-music-symbolic"
+  elif [[ "${BLOCK_NAME}" == "process" ]]; then
+    BLOCK_ICON="process-stop-symbolic"
+  elif [[ "${BLOCK_NAME}" == "space" ]]; then
+    BLOCK_ICON="drive-harddisk-solidstate-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "ssid" ]]; then
+    BLOCK_ICON="system-users-symbolic"
+  elif [[ "${BLOCK_NAME}" == "temperature" ]]; then
+    BLOCK_ICON="object-inverse" # TODO
+  elif [[ "${BLOCK_NAME}" == "trash" ]]; then
+    BLOCK_ICON="user-trash-symbolic"
+  elif [[ "${BLOCK_NAME}" == "usb" ]]; then
+    BLOCK_ICON="drive-removable-media-usb-symbolic-1"
+  elif [[ "${BLOCK_NAME}" == "vpn" ]]; then
+    BLOCK_ICON="dialog-password-symbolic" # TODO
+  elif [[ "${BLOCK_NAME}" == "weather" ]]; then
+    BLOCK_ICON="weather-few-clouds-symbolic"
+  elif [[ "${BLOCK_NAME}" == "webcam" ]]; then
+    BLOCK_ICON="camera-web-symbolic"
+  elif [[ "${BLOCK_NAME}" == "window" ]]; then
+    BLOCK_ICON="view-dual-symbolic" # TODO
+  fi
+
   VALUE_CHANGED=0
   HAS_CACHEFILE=0
   if [[ -f "${CACHE_FILE}" ]]; then
@@ -93,8 +163,6 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
       if [[ "${NOTIFY_CHANGES}" == *${BLOCK_NAME}* ]]; then
         NOTIFY=1
       fi
-    else
-      NOTIFY=0
     fi
   elif [[ "${NOTIFY_CHANGES}" == *${BLOCK_NAME}* ]]; then
     NOTIFY=1

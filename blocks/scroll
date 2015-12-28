@@ -33,7 +33,7 @@ elif [[ "${PROG}" != "" ]]; then
 fi
 
 if [[ "${OUT_TEXT}" ]]; then
-  CHECK_SUM=$(echo "${PROG}" | md5sum | awk '{print $1}')
+  CHECK_SUM=$(echo "${PROG}-${BLOCK_INSTANCE}" | md5sum | awk '{print $1}')
 
   TMP_FILE="/tmp/.scroll-${CHECK_SUM}"
 
