@@ -170,9 +170,9 @@ if [[ "${NOTIFY_NEVER}" != *${BLOCK_NAME}* ]]; then
     fi
     
     if [[ "${BLOCK_URGENT}" -gt 0 ]]; then
-      notify-send -u critical -t 5000 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "Warning: ${BLOCK_MESSAGE}"
+      notify-send -u critical -t 5000 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "${BLOCK_MESSAGE}"
     else
-      notify-send -u normal -t 3500 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "Info: ${BLOCK_MESSAGE}"
+      notify-send -u normal -t 3500 -i "${BLOCK_ICON}" -a "i3block-${BLOCK_NAME}" "${BLOCK_UCFIRST}" "${BLOCK_MESSAGE}"
     fi
   fi
 
