@@ -8,12 +8,12 @@ BATTERY_POWER=$(echo "${BATTERY_INFO}" | grep -o '[0-9]\+%' | tr -d '%')
 URGENT_VALUE=10
 
 if [[ "${BATTERY_STATE}" = "Charging" ]]; then
-  echo "+${BATTERY_POWER}%"
-  echo "+${BATTERY_POWER}%"
+  echo "${BATTERY_POWER}%+"
+  echo "${BATTERY_POWER}%+"
   echo ""
 elif [[ "${BATTERY_STATE}" = "Discharging" ]]; then
-  echo "-${BATTERY_POWER}%"
-  echo "-${BATTERY_POWER}%"
+  echo "-${BATTERY_POWER}%-"
+  echo "-${BATTERY_POWER}%-"
   echo ""
 else
   echo "${BATTERY_POWER}%"
