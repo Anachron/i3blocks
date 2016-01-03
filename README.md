@@ -21,6 +21,7 @@ Please be very careful when you include those into your i3blocks.
 ![ssid user temperature](scrots/ssid_user_temperature.png)
 ![usb trash scroll](scrots/usb_trash_scroll.png)
 ![vpn weather webcam](scrots/vpn_weather_webcam.png)
+![window](scrots/window.png)
 
 ## Blocks
 
@@ -345,6 +346,16 @@ Example config:
 [webcam]
 label=
 interval=5
+```
+
+### Window
+Example config:
+```
+[window]
+command=~/.i3-blocks/blocks/scroll $BLOCK_NAME
+label=
+markup=pango
+interval=repeat
 ```
 
 ## Authors
