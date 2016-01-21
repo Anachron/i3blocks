@@ -1,0 +1,18 @@
+#!/bin/bash
+
+KEYMAP_DIRECTORY='/usr/share/kbd/keymaps'
+
+VC_KEYMAP=$(localectl status | grep "VC\ Keymap" | awk -F ': ' '{print $2}')
+
+# Keymap has not been specific, so it's not configured properly
+if [[ "${VC_KEYMAP}" == "" ]]; then
+  exit 1
+fi
+
+KEYMAP_NAME=$(basename $(dirname $(find ${KEYMAP_DIRECTORY} -name "${VC_KEYMAP}*")))
+
+if [[ "${KEYMAP_NAME}" ]]; then
+  echo "${KEYMAP_NAME}"
+  echo "${KEYMAP_NAME}"
+  echo ""
+fi

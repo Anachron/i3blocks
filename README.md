@@ -22,6 +22,7 @@ Please be very careful when you include those into your i3blocks.
 ![usb trash scroll](scrots/usb_trash_scroll.png)
 ![vpn weather webcam](scrots/vpn_weather_webcam.png)
 ![window](scrots/window.png)
+![keymap](scrots/keymap.png)
 
 ## Blocks
 
@@ -138,6 +139,14 @@ Example config:
 [ip-address]
 label=
 interval=60
+```
+
+### Keymap
+Example config:
+```
+[keymap]
+label=
+interval=10
 ```
 
 ### Keystate
