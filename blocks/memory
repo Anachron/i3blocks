@@ -31,7 +31,13 @@ if [[ "${SOURCE_TOTAL}" -le 0 ]]; then
   exit
 fi
 
-SOURCE_FREE=$(echo "${MEMORY_INFOS}" | grep -i "${SOURCE}available" | awk -F ':' '{print $2}' | tr -d ' kB')
+if [[ "${SOURCE}" = "mem" ]]; then
+    SOURCE_FREE_KEY="available"
+elif [[ "${SOURCE}" = "swap" ]]; then
+    SOURCE_FREE_KEY="free"
+fi
+
+SOURCE_FREE=$(echo "${MEMORY_INFOS}" | grep -i "${SOURCE}${SOURCE_FREE_KEY}" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_USED=$(echo "scale=0; ${SOURCE_TOTAL}-${SOURCE_FREE}" | bc -l)
 SOURCE_PERC=$(echo "scale=0; (${SOURCE_USED}*100)/${SOURCE_TOTAL}" | bc -l)
 
