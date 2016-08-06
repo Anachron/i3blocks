@@ -2,12 +2,12 @@
 
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
-  amixer -q sset Master 5%+
-# Middle click
-elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
   amixer -q sset Master toggle
+# Middle click
+elif [[ "${BLOCK_BUTTON}" -eq 4 ]]; then
+  amixer -q sset Master 5%+
 # Right click
-elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+elif [[ "${BLOCK_BUTTON}" -eq 5 ]]; then
   amixer -q sset Master 5%-
 fi
 
