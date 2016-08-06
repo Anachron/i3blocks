@@ -3,10 +3,10 @@
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
   amixer -q sset Master toggle
-# Middle click
+# Scroll up
 elif [[ "${BLOCK_BUTTON}" -eq 4 ]]; then
   amixer -q sset Master 5%+
-# Right click
+# Scroll down
 elif [[ "${BLOCK_BUTTON}" -eq 5 ]]; then
   amixer -q sset Master 5%-
 fi
