@@ -1,18 +1,24 @@
 #!/bin/bash
 # Based on http://openweathermap.org/current
 
-PATH_TO_SECRETS="/home/cash/proj/dotfiles/secrets.txt"
-API_KEY="$(grep openweathermap_apikey $PATH_TO_SECRETS | sed 's/.*=//')"
+API_KEY="44db6a862fba0b067b1930da0d769e98"
 
 # Check on http://openweathermap.org/find
 CITY_ID="${BLOCK_INSTANCE}"
 
 # Celsius
-#URGENT_LOWER=0
-#URGENT_HIGHER=30
+URGENT_LOWER=0
+URGENT_HIGHER=30
 # Fahrenheit
-URGENT_LOWER=32
-URGENT_HIGHER=90
+#URGENT_LOWER=32
+#URGENT_HIGHER=90
+
+SYMBOL_CELSIUS="℃"
+SYMBOL_FAHRENHEIT="℉"
+DEGREE_SYMBOL="$SYMBOL_CELSIUS"
+
+UNITS="metric"
+#UNITS="imperial"
 
 ICON_SUNNY=""
 ICON_CLOUDY=""
@@ -20,13 +26,6 @@ ICON_RAINY=""
 ICON_STORM=""
 ICON_SNOW=""
 ICON_FOG=""
-
-SYMBOL_CELSIUS="℃"
-SYMBOL_FAHRENHEIT="℉"
-DEGREE_SYMBOL="$SYMBOL_FAHRENHEIT"
-
-#UNITS="metric"
-UNITS="imperial"
 
 WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=${UNITS}"
 
