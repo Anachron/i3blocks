@@ -10,9 +10,9 @@ else
 fi
 
 if [[ "${INFO_ARTIST}" ]] && [[ "${INFO_TITLE}" ]]; then
-  OUT_TEXT=$(echo "${INFO_ARTIST} - ${INFO_TITLE}" | xargs)
+  OUT_TEXT="${INFO_ARTIST} - ${INFO_TITLE}"
 elif [[ "${INFO_TITLE}" ]]; then
-  OUT_TEXT=$(echo "${INFO_TITLE}" | xargs)
+  OUT_TEXT="${INFO_TITLE}"
 fi
 
 echo "${OUT_TEXT}"
