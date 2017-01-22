@@ -1,0 +1,14 @@
+#!/bin/bash
+read -d '' awk_format <<"EOF"
+$1 !="* "{ if ($8=="--"||$9=="--")
+{print $1}
+}
+
+EOF
+
+c=$(nmcli dev wifi|awk "$awk_format")
+if [[ $(echo "$c"|wc -l) > 1 ]]; then 
+printf "%s\n" "${c%%$'\n'*}" ;
+printf "%s\n" "${c%%$'\n'*}" ;
+printf "#FFFF00\n"
+fi

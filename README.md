@@ -133,6 +133,13 @@ label=
 interval=10
 ```
 
+### Hotspot
+Example config:
+```
+[hotspot]
+interval=30
+```
+
 ### IP-Address
 Example config:
 ```
