@@ -2,9 +2,11 @@
 # Source: http://www.onlamp.com/pub/a/linux/2000/11/16/LinuxAdmin.html
 
 INSTANCE="${BLOCK_INSTANCE}"
+# If you don't like you can use any other IP
+INTERFACE="$(ip route get 8.8.8.8 | grep -Po '(?<=(dev )).*(?= src)')"
 
 if [[ "${INSTANCE}" = "" ]]; then
-  INSTANCE="wlp3s0;both"
+  INSTANCE="${INTERFACE};both"
 fi
 
 DISPLAY=$(echo "${INSTANCE}" | awk -F ';' '{print $2}')
