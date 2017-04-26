@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 URGENT_VALUE=25
-PACKAGE_COUNT=$(pacman -Qu | wc -l)
+PACKAGE_COUNT=$(checkupdates | wc -l)
 
 if [[ "${PACKAGE_COUNT}" -gt 0 ]]; then
   echo "${PACKAGE_COUNT}" # full-text
