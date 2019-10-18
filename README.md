@@ -2,8 +2,8 @@
 This has become an incredible big collection of blocks in use with i3wm. 
 It can also be an inspiration of how to do stuff in bash.
 
-## NOT MAINTAINED ANYMORE!
-I am not using i3 on my laptop anymore and thus this repo has no maintainer anymore.
+## Maintained by the Community
+I am not using i3 on my laptop anymore and thus I've started to transfer the maintainence to the Community.
 You can apply for maintaining it [here](https://github.com/Anachron/i3blocks/issues/47).
 I've tried merging it back with [i3blocks-contrib](https://github.com/vivien/i3blocks-contrib/issues/169) but there seems to be no interest.
 
