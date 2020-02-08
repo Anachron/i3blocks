@@ -359,6 +359,7 @@ Example config:
 ```
 [webcam]
 label=
+instance=/dev/video0
 interval=5
 ```
 
