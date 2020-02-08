@@ -34,7 +34,7 @@ elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; th
   echo ""
 elif [[ "${WEATHER_MAIN}" = *Thunderstorm* ]]; then
   echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"  
+  echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
 elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
   echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
