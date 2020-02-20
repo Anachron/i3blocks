@@ -37,7 +37,7 @@ fi
 if [[ "${METHOD}" = "xrandr" ]]; then
   percent=$(echo "scale=0;${curBrightness} * 100" | bc -l)
 elif [[ "${METHOD}" = "kernel" ]]; then
-  percent=$(echo "scale=0;${curBrightness} / ${maxBrightness} * 100" | bc -l)
+  percent=$(echo "scale=0;${curBrightness} * 100 / ${maxBrightness}" | bc -l)
 elif [[ "${METHOD}" = "xbacklight" ]]; then
   percent=$(echo "scale=0;${curBrightness}" | bc -l)
 fi
