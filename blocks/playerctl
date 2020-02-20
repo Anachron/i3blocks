@@ -5,6 +5,10 @@ INSTANCE="${BLOCK_INSTANCE}"
 
 if [[ "${INSTANCE}" != "" ]]; then
   ARGUMENTS="--player ${INSTANCE}"
+  ps -e | grep "${INSTANCE}" &> /dev/null
+fi
+if [ $? == 1 ]; then
+    exit 0
 fi
 
 ICON_PLAY="➤"
