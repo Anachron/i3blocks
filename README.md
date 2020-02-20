@@ -8,7 +8,9 @@ You can apply for maintaining it [here](https://github.com/Anachron/i3blocks/iss
 I've tried merging it back with [i3blocks-contrib](https://github.com/vivien/i3blocks-contrib/issues/169) but there seems to be no interest.
 
 ## Requirements
-All scripts are written in bash. Every script should be optimized for performance.
+- All scripts are written in bash. Every script should be optimized for performance.
+- `font-awesome` is required to display special glyphs:
+    - `apt install fonts-font-awesome` for Debian / Ubuntu
 
 ## WARNING:
 Some scripts (like display) also change your computers behaving!
