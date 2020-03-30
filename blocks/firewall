@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# you will have to enable passwordless sudo ind sudoers file if you want to use this
 # Left click
 if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
   sudo ufw enable
@@ -11,6 +11,9 @@ elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
   sudo ufw disable
 fi
 
+# to get the status without the dirty sudoers file hack, do this:
+#status=$(pgrep -f "ufw" 2>/dev/null)
+# else keep this
 status=$(sudo ufw status 2>/dev/null)
 
 if [[ $? -gt 0 ]]; then
@@ -26,3 +29,4 @@ else
   echo "off"
   echo ""
 fi
+
